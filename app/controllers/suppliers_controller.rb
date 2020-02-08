@@ -1,6 +1,15 @@
 class SuppliersController < ApplicationController
   before_action :set_supplier, only: [:show, :update, :destroy]
 
+  swagger_controller :suppliers, "Supplier Management"
+
+  swagger_api :index do
+    summary "Fetches all Suppliers items"
+    notes "This lists all the active suppliers"
+    response :unauthorized
+    response :not_acceptable, "The request you made is not acceptable"
+  end
+
   # GET /suppliers
   def index
     @suppliers = Supplier.all
@@ -8,11 +17,32 @@ class SuppliersController < ApplicationController
     render json: @suppliers
   end
 
+  swagger_api :show do
+    summary "Fetches a single Supplier item"
+    param :path, :id, :integer, :required, "Supplier Id"
+    response :ok, "Success", :Supplier
+    response :unauthorized
+    response :not_acceptable
+    response :not_found
+  end
+
   # GET /suppliers/1
   def show
     render json: @supplier
   end
 
+  swagger_api :create do
+    summary "Creates a new Supplier"
+    param :form, :supplierName, :string, :required, "Supplier Name"
+    param :form, :contactName , :string, :required, "Contact Name"
+    param :form, :address, :string, :required, "Address"
+    param :form, :city, :string, :required, "City"
+    param :form, :postalCode, :string, :required, "Postal Code"
+    param :form, :country, :string, :required, "Country"
+    param_list :form, :phone, :string, :required, "Phone"
+    response :unauthorized
+    response :not_acceptable
+  end
   # POST /suppliers
   def create
     @supplier = Supplier.new(supplier_params)
@@ -24,6 +54,19 @@ class SuppliersController < ApplicationController
     end
   end
 
+  swagger_api :update do
+    summary "Update a existing Supplier"
+    param :path, :id, :integer, :required, "Supplier Id"
+    param :form, :supplierName, :string, :required, "Supplier Name"
+    param :form, :contactName , :string, :required, "Contact Name"
+    param :form, :address, :string, :required, "Address"
+    param :form, :city, :string, :required, "City"
+    param :form, :postalCode, :string, :required, "Postal Code"
+    param :form, :country, :string, :required, "Country"
+    param_list :form, :phone, :string, :required, "Phone"
+    response :unauthorized
+    response :not_acceptable
+  end
   # PATCH/PUT /suppliers/1
   def update
     if @supplier.update(supplier_params)
