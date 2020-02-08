@@ -5,9 +5,7 @@ class CreateProducts < ActiveRecord::Migration[6.0]
       t.string :unit
       t.decimal :price
 
-      t.belongs_to :category
       t.belongs_to :supplier
-
       t.timestamps
     end
   end
