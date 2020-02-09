@@ -79,6 +79,15 @@ class SuppliersController < ApplicationController
     end
   end
 
+  # swagger_api :show do
+  #   summary "Fetches a single Supplier item"
+  #   param :path, :id, :integer, :required, "Supplier Id"
+  #   response :ok, "Success", :Supplier
+  #   response :unauthorized
+  #   response :not_acceptable
+  #   response :not_found
+  # end
+
   # DELETE /suppliers/1
   def destroy
     @supplier.destroy
